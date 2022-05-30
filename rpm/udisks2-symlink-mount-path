@@ -15,11 +15,11 @@ if [ -L $OLD_MOUNT_PATH ]; then
   exit 0
 fi
 
-DEVICEUSER=$(loginctl list-sessions | grep seat0 | tr -s " " | cut -d " " -f 4)
+DEVICEUSER="$(loginctl list-sessions | grep -F seat0 | tr -s ' ' | cut -d ' ' -f 4)"
 for path in ${OLD_MOUNT_PATH}/*
 do
   rmdir ${path}
 done
 
-rmdir ${OLD_MOUNT_PATH} && ln -s /run/media/${DEVICEUSER} ${OLD_MOUNT_PATH}
+rmdir ${OLD_MOUNT_PATH} && ln -s "/run/media/${DEVICEUSER}" ${OLD_MOUNT_PATH}
 exit $?
